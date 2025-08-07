@@ -2,6 +2,10 @@ import { Routes } from '@angular/router';
 
 export const routes: Routes = [
   {
+    path: 'tailwind-test',
+    loadComponent: () => import('./components/tailwind-test/tailwind-test.component').then(m => m.TailwindTestComponent)
+  },
+  {
     path: '',
     loadComponent: () => import('./pages/home/home.component').then(m => m.HomeComponent)
   },
