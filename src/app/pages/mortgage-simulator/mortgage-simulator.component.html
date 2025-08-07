@@ -1,0 +1,168 @@
+<div class="bg-gray-50 min-h-screen py-12">
+  <div class="container mx-auto px-4">
+    <!-- Header -->
+    <div class="text-center mb-12">
+      <div class="flex items-center justify-center gap-3 mb-4">
+        <div class="w-12 h-12 bg-primary-600 rounded-lg flex items-center justify-center">
+          <lucide-calculator class="w-6 h-6 text-white"></lucide-calculator>
+        </div>
+        <h1 class="text-4xl font-bold text-gray-900">Simulador Hipotecario</h1>
+      </div>
+      <p class="text-xl text-gray-600">
+        Calcula tu cuota mensual y compara ofertas de diferentes bancos
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <!-- Calculator Form -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="text-2xl font-bold">Ingresa los datos</h2>
+        </div>
+        <div class="card-body">
+          <form (ngSubmit)="calculateMortgage()" class="space-y-6">
+            <div class="form-group">
+              <label class="form-label flex items-center gap-2">
+                <app-dollar-sign class="w-4 h-4"></app-dollar-sign>
+                Valor de la propiedad
+              </label>
+              <input 
+                type="number" 
+                [(ngModel)]="propertyValue" 
+                name="propertyValue"
+                class="form-input" 
+                placeholder="Ej: 50000000"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label flex items-center gap-2">
+                <app-percent class="w-4 h-4"></app-percent>
+                Pie (%)
+              </label>
+              <input 
+                type="number" 
+                [(ngModel)]="downPaymentPercent" 
+                name="downPaymentPercent"
+                class="form-input" 
+                placeholder="Ej: 20"
+                min="10"
+                max="90"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label flex items-center gap-2">
+                <app-calendar class="w-4 h-4"></app-calendar>
+                Plazo (años)
+              </label>
+              <select [(ngModel)]="loanTerm" name="loanTerm" class="form-input">
+                <option value="10">10 años</option>
+                <option value="15">15 años</option>
+                <option value="20">20 años</option>
+                <option value="25">25 años</option>
+                <option value="30">30 años</option>
+              </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-full">
+              Calcular hipoteca
+            </button>
+          </form>
+
+          <!-- Results -->
+          <div *ngIf="monthlyPayment > 0" class="mt-8 p-6 bg-green-50 rounded-lg">
+            <h3 class="text-lg font-semibold text-green-800 mb-4">Resultado del cálculo</h3>
+            <div class="grid grid-cols-2 gap-4 text-sm">
+              <div>
+                <span class="text-gray-600">Cuota mensual:</span>
+                <div class="font-semibold text-lg text-green-600">
+                  ${{ monthlyPayment | number:'1.0-0' }}
+                </div>
+              </div>
+              <div>
+                <span class="text-gray-600">Total a pagar:</span>
+                <div class="font-semibold">
+                  ${{ totalPayment | number:'1.0-0' }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bank Offers -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="text-2xl font-bold">Ofertas de bancos</h2>
+        </div>
+        <div class="card-body">
+          <div *ngIf="bankOffers.length === 0" class="text-center py-12">
+            <app-calculator class="w-16 h-16 text-gray-300 mx-auto mb-4"></app-calculator>
+            <p class="text-gray-500">Ingresa los datos y calcula para ver las ofertas</p>
+          </div>
+
+          <div *ngIf="bankOffers.length > 0" class="space-y-4">
+            <div 
+              *ngFor="let offer of bankOffers" 
+              class="border rounded-lg p-4 hover:shadow-md transition-shadow"
+            >
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                    <span class="text-blue-600 font-bold">{{ offer.bank.charAt(0) }}</span>
+                  </div>
+                  <div>
+                    <h3 class="font-semibold">{{ offer.bank }}</h3>
+                    <p class="text-sm text-gray-600">Tasa: {{ offer.rate }}%</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-2 gap-4 text-sm">
+                <div>
+                  <span class="text-gray-600">Cuota mensual:</span>
+                  <div class="font-semibold text-lg text-primary-600">
+                    ${{ offer.monthlyPayment | number:'1.0-0' }}
+                  </div>
+                </div>
+                <div>
+                  <span class="text-gray-600">Total a pagar:</span>
+                  <div class="font-semibold">
+                    ${{ offer.totalPayment | number:'1.0-0' }}
+                  </div>
+                </div>
+              </div>
+
+              <button class="btn btn-secondary w-full mt-3">
+                Solicitar información
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact Section -->
+    <div class="mt-12 card">
+      <div class="card-body text-center">
+        <h3 class="text-2xl font-bold mb-4">¿Necesitas ayuda?</h3>
+        <p class="text-gray-600 mb-6">
+          Nuestros asesores están disponibles para ayudarte con tu crédito hipotecario
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <button class="btn btn-primary flex items-center gap-2">
+            <app-phone class="w-4 h-4"></app-phone>
+            Llamar ahora
+          </button>
+          <button class="btn btn-secondary flex items-center gap-2">
+            <app-mail class="w-4 h-4"></app-mail>
+            Enviar mensaje
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 
