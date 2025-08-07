@@ -12,7 +12,7 @@ import { Icons } from '../../utils/icons';
 })
 export class IconComponent {
   @Input() name!: keyof typeof Icons;
-  @Input() class: string = 'w-4 h-4';
+  @Input() class: string = 'icon-sm';
 
   constructor(private sanitizer: DomSanitizer) {}
 
@@ -22,8 +22,8 @@ export class IconComponent {
     }
     
     let iconSvg = Icons[this.name];
-    // Replace the default class with the custom class
-    iconSvg = iconSvg.replace('class="w-4 h-4"', `class="${this.class}"`);
+    // Replace the default class with the custom class  
+    iconSvg = iconSvg.replace(/class="[^"]*"/, `class="${this.class}"`);
     
     return this.sanitizer.bypassSecurityTrustHtml(iconSvg);
   }

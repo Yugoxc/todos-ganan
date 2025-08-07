@@ -14,8 +14,8 @@ import { IconComponent } from '../../components/icon/icon.component';
   template: `
     <!-- Hero Banner -->
     <section class="hero-section">
-      <div class="container mx-auto px-4">
-        <div class="max-w-4xl mx-auto text-center">
+      <div class="container-responsive">
+        <div class="max-w-4xl mx-auto text-center px-4">
           <h1 class="hero-title">
             Encuentra tu próxima propiedad
           </h1>
@@ -24,7 +24,7 @@ import { IconComponent } from '../../components/icon/icon.component';
           </p>
           <button 
             routerLink="/publicar" 
-            class="btn bg-white text-brand-500 hover:bg-gray-100 text-lg px-8 py-4 mt-8"
+            class="btn bg-white text-brand-500 hover:bg-gray-100 text-base md:text-lg px-6 md:px-8 py-3 md:py-4 mt-6 md:mt-8 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
           >
             Publica tu propiedad gratis
           </button>
@@ -33,13 +33,13 @@ import { IconComponent } from '../../components/icon/icon.component';
     </section>
 
     <!-- Search Section -->
-    <section class="py-12 bg-white">
-      <div class="container mx-auto px-4">
-        <div class="max-w-4xl mx-auto">
-          <h2 class="text-3xl font-bold text-center mb-8">Busca tu propiedad ideal</h2>
+    <section class="py-8 md:py-12 bg-white">
+      <div class="container-responsive">
+        <div class="max-w-6xl mx-auto">
+          <h2 class="text-2xl md:text-3xl font-bold text-center mb-6 md:mb-8">Busca tu propiedad ideal</h2>
           
-          <div class="card p-6">
-            <form (ngSubmit)="onSearch()" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="card p-4 md:p-6">
+            <form (ngSubmit)="onSearch()" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
               <div class="form-group">
                 <label class="form-label">Región</label>
                 <select [(ngModel)]="searchFilters.region" name="region" class="form-input">
@@ -85,9 +85,9 @@ import { IconComponent } from '../../components/icon/icon.component';
                 </select>
               </div>
 
-              <div class="md:col-span-2 lg:col-span-4">
-                <button type="submit" class="btn btn-primary w-full flex items-center justify-center gap-2">
-                  <app-icon name="Search" class="w-4 h-4"></app-icon>
+              <div class="sm:col-span-2 lg:col-span-4 flex gap-4">
+                <button type="submit" class="btn btn-primary flex-1 flex items-center justify-center gap-2 text-sm md:text-base">
+                  <app-icon name="Search" class="icon-sm"></app-icon>
                   Buscar propiedades
                 </button>
               </div>
@@ -98,16 +98,16 @@ import { IconComponent } from '../../components/icon/icon.component';
     </section>
 
     <!-- Featured Properties -->
-    <section class="py-12 bg-gray-50">
-      <div class="container mx-auto px-4">
-        <div class="text-center mb-12">
-          <h2 class="text-3xl font-bold mb-4">Propiedades destacadas</h2>
-          <p class="text-gray-600 max-w-2xl mx-auto">
+    <section class="py-8 md:py-12 bg-gray-50">
+      <div class="container-responsive">
+        <div class="text-center mb-8 md:mb-12">
+          <h2 class="text-2xl md:text-3xl font-bold mb-3 md:mb-4">Propiedades destacadas</h2>
+          <p class="text-gray-600 max-w-2xl mx-auto text-sm md:text-base leading-relaxed">
             Descubre las mejores oportunidades inmobiliarias seleccionadas especialmente para ti
           </p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           <div 
             *ngFor="let property of featuredProperties" 
             class="property-card group cursor-pointer"
@@ -117,50 +117,50 @@ import { IconComponent } from '../../components/icon/icon.component';
               <img 
                 [src]="property.images[0] || 'https://via.placeholder.com/400x280/666666/FFFFFF?text=Propiedad'" 
                 [alt]="property.title"
-                class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
-              <div class="absolute top-4 left-4">
+              <div class="absolute top-3 left-3 md:top-4 md:left-4">
                 <span class="badge badge-primary">{{ property.type | propertyTypeLabel }}</span>
               </div>
-              <div class="absolute top-4 right-4">
+              <div class="absolute top-3 right-3 md:top-4 md:right-4">
                 <button 
-                  class="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-gray-50 transition-colors"
+                  class="w-8 h-8 md:w-10 md:h-10 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-gray-50 transition-all duration-200 hover:scale-110"
                   (click)="toggleFavorite(property, $event)"
                 >
                   <app-icon 
                     [name]="property.isFavorite ? 'Heart' : 'Heart'" 
-                    [class]="property.isFavorite ? 'w-4 h-4 text-red-500 fill-current' : 'w-4 h-4 text-gray-400'"
+                    [class]="property.isFavorite ? 'icon-sm text-red-500 fill-current' : 'icon-sm text-gray-400'"
                   ></app-icon>
                 </button>
               </div>
             </div>
             
             <div class="property-card-content">
-              <div class="flex items-start justify-between mb-2">
+              <div class="flex items-start justify-between mb-2 md:mb-3">
                 <h3 class="property-card-title">{{ property.title }}</h3>
-                <div class="flex items-center gap-1">
-                  <app-icon name="Star" class="w-4 h-4 text-yellow-400 fill-current"></app-icon>
-                  <span class="text-sm text-gray-600">4.8</span>
+                <div class="flex items-center gap-1 flex-shrink-0 ml-2">
+                  <app-icon name="Star" class="icon-xs text-yellow-400 fill-current"></app-icon>
+                  <span class="text-xs md:text-sm text-gray-600">4.8</span>
                 </div>
               </div>
               
-              <p class="property-card-location flex items-center gap-1 mb-3">
-                <app-icon name="MapPin" class="w-3 h-3"></app-icon>
+              <p class="property-card-location mb-3 md:mb-4">
+                <app-icon name="MapPin" class="icon-xs"></app-icon>
                 {{ property.location }}
               </p>
               
-              <div class="flex items-center justify-between mb-4">
-                <div class="flex items-center gap-4 text-sm text-gray-600">
+              <div class="flex items-center justify-between mb-3 md:mb-4">
+                <div class="flex items-center gap-2 md:gap-4 text-xs md:text-sm text-gray-600">
                   <span class="flex items-center gap-1">
-                    <app-icon name="Home" class="w-4 h-4"></app-icon>
+                    <app-icon name="Home" class="icon-xs"></app-icon>
                     {{ property.bedrooms }} hab
                   </span>
                   <span class="flex items-center gap-1">
-                    <app-icon name="Bath" class="w-4 h-4"></app-icon>
+                    <app-icon name="Bath" class="icon-xs"></app-icon>
                     {{ property.bathrooms }} baños
                   </span>
                   <span class="flex items-center gap-1">
-                    <app-icon name="Square" class="w-4 h-4"></app-icon>
+                    <app-icon name="Square" class="icon-xs"></app-icon>
                     {{ property.area }} m²
                   </span>
                 </div>
@@ -169,7 +169,7 @@ import { IconComponent } from '../../components/icon/icon.component';
               <div class="flex items-center justify-between">
                 <div class="property-card-price">{{ property.price | currency:'USD':'symbol':'1.0-0' }}</div>
                 <button 
-                  class="btn btn-primary text-sm px-4 py-2"
+                  class="btn btn-primary text-xs md:text-sm px-3 md:px-4 py-2"
                   (click)="participateInProperty(property, $event)"
                 >
                   Participar
@@ -179,144 +179,57 @@ import { IconComponent } from '../../components/icon/icon.component';
           </div>
         </div>
 
-        <div class="text-center mt-12">
+        <div class="text-center mt-8 md:mt-12">
           <button 
             routerLink="/propiedades" 
-            class="btn btn-secondary text-lg px-8 py-3"
+            class="btn btn-secondary text-base md:text-lg px-6 md:px-8 py-3 shadow-sm hover:shadow-md"
           >
             Ver todas las propiedades
-            <app-icon name="ArrowRight" class="w-4 h-4"></app-icon>
+            <app-icon name="ArrowRight" class="icon-sm"></app-icon>
           </button>
         </div>
       </div>
     </section>
 
     <!-- Features Section -->
-    <section class="py-16 bg-white">
-      <div class="container mx-auto px-4">
-        <div class="text-center mb-12">
-          <h2 class="text-3xl font-bold mb-4">¿Por qué elegir Todos Ganan?</h2>
-          <p class="text-gray-600 max-w-2xl mx-auto">
+    <section class="py-12 md:py-16 bg-white">
+      <div class="container-responsive">
+        <div class="text-center mb-8 md:mb-12">
+          <h2 class="text-2xl md:text-3xl font-bold mb-3 md:mb-4">¿Por qué elegir Todos Ganan?</h2>
+          <p class="text-gray-600 max-w-2xl mx-auto text-sm md:text-base leading-relaxed">
             Nuestra plataforma revoluciona el mercado inmobiliario conectando propietarios y buscadores de manera eficiente
           </p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div class="text-center">
-            <div class="w-16 h-16 bg-brand-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <app-icon name="Building2" class="w-8 h-8 text-brand-500"></app-icon>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+          <div class="text-center p-4 md:p-6 rounded-xl hover:bg-gray-50 transition-colors">
+            <div class="w-12 h-12 md:w-16 md:h-16 bg-brand-100 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-4">
+              <app-icon name="Building2" class="icon-md md:icon-lg text-brand-500"></app-icon>
             </div>
-            <h3 class="text-xl font-semibold mb-2">Propiedades verificadas</h3>
-            <p class="text-gray-600">Todas nuestras propiedades pasan por un riguroso proceso de verificación</p>
+            <h3 class="text-lg md:text-xl font-semibold mb-2 md:mb-3">Propiedades verificadas</h3>
+            <p class="text-gray-600 text-sm md:text-base leading-relaxed">Todas nuestras propiedades pasan por un riguroso proceso de verificación</p>
           </div>
           
-          <div class="text-center">
-            <div class="w-16 h-16 bg-brand-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <app-icon name="DollarSign" class="w-8 h-8 text-brand-500"></app-icon>
+          <div class="text-center p-4 md:p-6 rounded-xl hover:bg-gray-50 transition-colors">
+            <div class="w-12 h-12 md:w-16 md:h-16 bg-brand-100 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-4">
+              <app-icon name="DollarSign" class="icon-md md:icon-lg text-brand-500"></app-icon>
             </div>
-            <h3 class="text-xl font-semibold mb-2">Sin comisiones</h3>
-            <p class="text-gray-600">Publica tu propiedad sin pagar comisiones. Solo pagas cuando vendes</p>
+            <h3 class="text-lg md:text-xl font-semibold mb-2 md:mb-3">Sin comisiones</h3>
+            <p class="text-gray-600 text-sm md:text-base leading-relaxed">Publica tu propiedad sin pagar comisiones. Solo pagas cuando vendes</p>
           </div>
           
-          <div class="text-center">
-            <div class="w-16 h-16 bg-brand-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <app-icon name="Users" class="w-8 h-8 text-brand-500"></app-icon>
+          <div class="text-center p-4 md:p-6 rounded-xl hover:bg-gray-50 transition-colors">
+            <div class="w-12 h-12 md:w-16 md:h-16 bg-brand-100 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-4">
+              <app-icon name="Users" class="icon-md md:icon-lg text-brand-500"></app-icon>
             </div>
-            <h3 class="text-xl font-semibold mb-2">Comunidad activa</h3>
-            <p class="text-gray-600">Conecta con miles de compradores interesados en tu zona</p>
+            <h3 class="text-lg md:text-xl font-semibold mb-2 md:mb-3">Comunidad activa</h3>
+            <p class="text-gray-600 text-sm md:text-base leading-relaxed">Conecta con miles de compradores interesados en tu zona</p>
           </div>
         </div>
       </div>
     </section>
   `,
-  styles: [`
-    .hero-section {
-      background: linear-gradient(135deg, var(--brand-500) 0%, var(--brand-600) 100%);
-      color: white;
-      padding: var(--spacing-4xl) 0;
-      text-align: center;
-    }
-
-    .hero-title {
-      font-size: clamp(2rem, 5vw, 3.5rem);
-      font-weight: 700;
-      margin-bottom: var(--spacing-lg);
-      line-height: 1.1;
-    }
-
-    .hero-subtitle {
-      font-size: clamp(1rem, 2.5vw, 1.25rem);
-      margin-bottom: var(--spacing-2xl);
-      opacity: 0.9;
-    }
-
-    .property-card {
-      background: white;
-      border-radius: var(--border-radius-lg);
-      overflow: hidden;
-      transition: all var(--transition-normal);
-      cursor: pointer;
-      border: 1px solid var(--gray-200);
-    }
-
-    .property-card:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-2xl);
-    }
-
-    .property-card-image {
-      position: relative;
-      width: 100%;
-      height: 280px;
-      overflow: hidden;
-    }
-
-    @media (max-width: 768px) {
-      .property-card-image {
-        height: 200px;
-      }
-    }
-
-    .property-card-content {
-      padding: var(--spacing-lg);
-    }
-
-    .property-card-title {
-      font-family: 'Inter', sans-serif;
-      font-size: 1.125rem;
-      font-weight: 600;
-      color: var(--gray-900);
-      margin-bottom: var(--spacing-sm);
-      line-height: 1.3;
-    }
-
-    .property-card-location {
-      color: var(--gray-600);
-      font-size: 0.875rem;
-      margin-bottom: var(--spacing-sm);
-    }
-
-    .property-card-price {
-      font-family: 'Inter', sans-serif;
-      font-size: 1.25rem;
-      font-weight: 600;
-      color: var(--gray-900);
-    }
-
-    @media (max-width: 768px) {
-      .container {
-        padding: 0 var(--spacing-md);
-      }
-      
-      .hero-section {
-        padding: var(--spacing-2xl) 0;
-      }
-      
-      .property-card-content {
-        padding: var(--spacing-md);
-      }
-    }
-  `]
+  styles: []
 })
 export class HomeComponent implements OnInit {
   featuredProperties: Property[] = [];
